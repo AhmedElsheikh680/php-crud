@@ -18,17 +18,36 @@
                     @foreach ($posts as $post)
                         <tr>
                             <th scope="row">{{ $post['id'] }}</th>
-                            <td>{{ $post['title']}}</td>
-                            <td>{{ $post['posted_by']}}</td>
+                            <!-- <td>{{ $post['title']}}</td> -->
+                            <td>{{ $post->title}}</td>
+                            <td>{{ $post->user ? $post->user->name : 'Not Found'}}</td>
                             <td>{{$post['created_at'] }}</td>
                             <td><a href="{{route('posts.show',$post['id'])}}" class="btn btn-info">View</a></td>
                             <td><a href="{{route('posts.edit',$post['id']) }}" class="btn btn-primary">Edit</a></td>
-                            <td><a href="#" class="btn btn-danger">Delete</a></td>
+                            <td>
+                                    <form action="{{route('posts.delete', $post['id'])}}" method="post">
+                                        @csrf
+                                        @method('delete')
+                                            <button type="submit" onclick="return confirm('Are You Sure You Want To Delete?');"  id="btnDelete"
+                                            class="btn btn-danger btn-sm" >
+                                                Delete
+                                            </button>
+                                    </form>
+                            </td>
+
                         </tr>
                     @endforeach
-                 
+
                 </tbody>
             </table>
+            <nav aria-label="...">
+  <ul class="pagination justify-content-center">
+
+    {{$posts->onEachSide(1)->links()}}
+
+
+  </ul>
+
+</nav>
 
 @endsection
- 

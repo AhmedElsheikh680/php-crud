@@ -2,31 +2,31 @@
 @section('content')
 @section('title') Edit @endsection
 
-<form>
-    @foreach($posts as $post)
-    @if($post['id'] ==$postId)
-            @csrf    
+<form method="post" action="{{route('posts.update', $post['id'])}}">
+
+            @csrf
+            @method('patch')
             <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Title</label>
-                    <input  type="text" value="{{ $post['title'] }}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input name='title'  type="text" value="{{ $post['title'] }}"  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Description</label>
 
-                    <textarea  class="form-control"> </textarea>
+                    <textarea  class="form-control"> {{ $post->description }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Post Creator</label>
-                    <select  class="form-control">
-                        <option value="1">Ahmed</option>
-                        <option value="2">Mohamed</option>
-                        <option value="3">Ali</option>
+                    <select name="user_id"  class="form-control">
+
+                        <option value="1">{{ $post->user ? $post->user->name : 'Not Found'}}</option>
+                        <option value="2">{{ $post->user ? $post->user->name : 'Not Found'}}</option>
+                        <option value="3">{{ $post->user ? $post->user->name : 'Not Found'}}</option>
                     </select>
                 </div>
-              
+
                 <button type="submit" class="btn btn-success">Update</button>
-    @endif
-    @endforeach
+
             </form>
 
 @endsection
