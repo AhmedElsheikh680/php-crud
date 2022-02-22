@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\User;
+use App\Http\Requests\postRequest;
 
 class PostController extends Controller
 {
@@ -20,13 +21,24 @@ class PostController extends Controller
     }
 
     public function create() {
+        //Check If User Login
         $users = User::all();
 
         return view('posts.create', [
             'users' =>$users
         ]);
     }
-    public function store() {
+    public function store(PostRequest $request) {
+        //Validation
+        // request()->validate([
+        //     'title' =>['required','min:3','unique:posts'],
+        //     'description' => ['required','min:10']
+        // ],[
+        //     'title.required' => 'The Title Is Required',
+        //     'title.min' => 'The Title Must Be At Least 3 Chars',
+        //     'title.unique' =>'Title Must Be Unique',
+        //     'description.required' => 'THe Description Is Required'
+        // ]);
         $requestData = request()->all();
         Post::create($requestData);
         // Post::create([
@@ -68,7 +80,18 @@ class PostController extends Controller
 
     }
 
-    public function update(Request $request, $id){
+    public function update(PostRequest $request, $id){
+        //   request()->validate([
+        //     'title' =>['required','min:3','unique:posts'],
+        //     'description' =>['required','min:10']
+        // ],[
+        //     'title.required' => 'The Title Is Required',
+        //     'title.min' => 'The Title Must Be At Least 3 Chars',
+        //     'title.unique' =>'Title Must Be Unique',
+        //     'description.required' => 'The Description Is Required',
+        //     'description.min' => 'The Description Must Be 10 Chars'
+        // ]);
+
         Post::find($id)->update($request->all());
         return redirect()->route('posts.index');
     }

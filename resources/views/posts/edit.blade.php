@@ -13,7 +13,7 @@
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Description</label>
 
-                    <textarea  class="form-control"> {{ $post->description }}</textarea>
+                    <textarea name="description"  class="form-control"> {{ $post->description }}</textarea>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Post Creator</label>
